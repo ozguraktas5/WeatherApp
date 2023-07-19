@@ -1,0 +1,21 @@
+body {
+    background: linear-gradient( #068D73, #3CD3B4);
+    background-repeat: no-repeat;
+    height: 100vh;
+
+    .cards-all {
+        display: flex;
+    }
+
+    .btn {
+        background-color: white;
+        color: black;
+        border: none;
+    }
+
+    
+
+    .form-control {
+        flex: 0.25 !important;
+    }
+}
