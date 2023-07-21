@@ -7,8 +7,6 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { Container, Button, Form, InputGroup } from "react-bootstrap";
 import axios from "axios";
 
-const API_KEY = import.meta.env.WEATHER_API_KEY;
-
 const Card = () => {
   const [currentDate, setCurrentDate] = useState("");
   const [city, setCity] = useState("");
@@ -17,12 +15,12 @@ const Card = () => {
   const handleChange = (e) => {
     setCity(e.target.value);
   };
-
   const handleSubmit = () => {
-    const apiKey = API_KEY;
-
     axios
-      .get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}`)
+      .get(
+        `http://api.weatherapi.com/v1/current.json?key=360656f7fcf64edc9fe130433232007&q=${city}&aqi=yes`
+      )
+
       .then((response) => {
         setWeatherData(response.data);
       })
@@ -68,11 +66,21 @@ const Card = () => {
         </div>
         <div className="card-bottom">
           <div className="icon">
-            <i className="wi wi-day-haze"></i>
+            {weatherData.current && weatherData.current.condition && (
+              <img src={weatherData.current.condition.icon} alt="icon" />
+            )}
           </div>
 
-          <p className="icon-text">MOSTLY SUNNY</p>
-          <p className="degrees">29°C</p>
+          <p className="icon-text">
+            {weatherData.current && weatherData.current.condition
+              ? weatherData.current.condition.text
+              : ""}
+          </p>
+          <p className="degrees">
+            {weatherData.current && weatherData.current.temp_c
+              ? `${weatherData.current.temp_c}°C`
+              : ""}
+          </p>
 
           <div className="search">
             <InputGroup className="mb-3">
