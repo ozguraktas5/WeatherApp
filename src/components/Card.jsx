@@ -19,7 +19,7 @@ const Card = () => {
   const handleSubmit = () => {
     axios
       .get(
-        `http://api.weatherapi.com/v1/current.json?key=360656f7fcf64edc9fe130433232007&q=${city}&aqi=yes`
+        `https://api.weatherapi.com/v1/current.json?key=360656f7fcf64edc9fe130433232007&q=${city}&aqi=yes`
       )
 
       .then((response) => {
@@ -32,7 +32,7 @@ const Card = () => {
 
     axios
       .get(
-        `http://api.weatherapi.com/v1/forecast.json?key=360656f7fcf64edc9fe130433232007&q=${city}&days=7&aqi=no&alerts=no`
+        `https://api.weatherapi.com/v1/forecast.json?key=360656f7fcf64edc9fe130433232007&q=${city}&days=7&aqi=no&alerts=no`
       )
 
       .then((response) => {
