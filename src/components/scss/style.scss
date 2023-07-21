@@ -1,21 +1,29 @@
 body {
-  background: linear-gradient(#068d73, #3cd3b4);
-  background-repeat: no-repeat;
   box-sizing: border-box;
-  height: 100vh;
-  position: relative;
-
+  margin: 0 !important;
+  padding: 0;
+  
+  
   .cards-all {
     display: flex;
     justify-content: center;
-    height: 100vh;
     align-items: center;
-    background-color: #068d73;
-    gap: 7rem;
+    background: linear-gradient(#068d73, #3cd3b4);
+    background-repeat: no-repeat;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+    padding: 0 !important;
+    
+
     .cards-left {
       display: flex;
       flex-direction: column;
+      align-items: center !important;
+      justify-content: center;
       gap: 1.5rem;
+      flex: 1;
+      padding: 2rem;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+      height: 100vh;
       .button-up {
         display: flex;
         gap: 2rem;
@@ -38,6 +46,10 @@ body {
           }
         }
 
+        .home:hover {
+          color: black;
+        }
+
         .forecast {
           display: flex;
           justify-content: center;
@@ -53,6 +65,10 @@ body {
           p {
             font-size: 0.8rem;
           }
+        }
+
+        .forecast:hover {
+          color: black;
         }
         .share {
           display: flex;
@@ -70,13 +86,16 @@ body {
             font-size: 0.8rem;
           }
         }
+        .share:hover {
+          color: black;
+        }
       }
       .card-bottom {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+
         .icon {
-          font-size: 6rem;
+          font-size: 6rem !important;
           text-align: center;
           color: white;
         }
@@ -92,9 +111,9 @@ body {
         }
 
         .input-icon {
-            height: 30px;
-            display: flex;
-            align-items: center;
+          height: 30px;
+          display: flex;
+          align-items: center;
         }
         .form-control {
           flex: 1 !important;
@@ -115,11 +134,18 @@ body {
     }
 
     .cards-right {
-      
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 2;
+      background-color: #08aa8a;
+      padding: 2rem;
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+      height: 100vh;
       .weather-up {
-        margin-top: -2rem;
         text-align: center;
-        
+
         .forecast {
           margin-bottom: 3rem;
           svg {
@@ -133,31 +159,15 @@ body {
         }
       }
       .weather-bottom {
-        .first-three-day {
-          display: flex;
-          text-align: center;
-          gap: 4rem;
-          
-          .icon {
-            font-size: 2rem;
-            color: white;
-          }
-          .degrees {
-            font-size: 2rem;
-            color: white;
-          }
-          .date {
-            margin-top: 2rem;
-            color: white;
-            font-size: 0.9rem;
-          }
-        }
+        display: flex;
+        flex-wrap: wrap;
 
-        .second-three-day {
+        .days {
           display: flex;
-          text-align: center;
-          margin-top: 3.5rem;
-          gap: 4rem;
+          flex-direction: column;
+          align-items: center;
+          width: 33%;
+
           .icon {
             font-size: 2rem;
             color: white;
@@ -180,5 +190,16 @@ body {
     background-color: white;
     color: black;
     border: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .cards-all {
+      display: flex;
+      flex-direction: column;
+      .cards-right {
+        margin-top: 1rem !important;
+        padding: 2rem;
+      }
+    }
   }
 }

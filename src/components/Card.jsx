@@ -11,6 +11,7 @@ const Card = () => {
   const [currentDate, setCurrentDate] = useState("");
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState({});
+  const [forecastData, setForecastData] = useState([]);
 
   const handleChange = (e) => {
     setCity(e.target.value);
@@ -23,6 +24,20 @@ const Card = () => {
 
       .then((response) => {
         setWeatherData(response.data);
+        localStorage.setItem("weatherData", JSON.stringify(response.data))
+      })
+      .catch((error) => {
+        console.error("Error", error);
+      });
+
+    axios
+      .get(
+        `http://api.weatherapi.com/v1/forecast.json?key=360656f7fcf64edc9fe130433232007&q=${city}&days=7&aqi=no&alerts=no`
+      )
+
+      .then((response) => {
+        setForecastData(response.data.forecast.forecastday.slice(1, 7));
+        localStorage.setItem("forecastData", JSON.stringify(response.data.forecast.forecastday.slice(1, 7)))
       })
       .catch((error) => {
         console.error("Error", error);
@@ -30,10 +45,19 @@ const Card = () => {
   };
 
   useEffect(() => {
+    const savedWeatherData = JSON.parse(localStorage.getItem("weatherData"));
+    if (savedWeatherData) {
+      setWeatherData(savedWeatherData);
+    }
+    const savedForecastData = JSON.parse(localStorage.getItem("forecastData"));
+    if (savedForecastData) {
+      setForecastData(savedForecastData);
+    }
+
     const intervalID = setInterval(() => {
       const date = new Date();
       setCurrentDate(formatDate(date));
-    }, 1000);
+    });
 
     return () => clearInterval(intervalID);
   }, []);
@@ -48,7 +72,7 @@ const Card = () => {
     return date.toLocaleDateString(undefined, options);
   };
   return (
-    <Container className="cards-all">
+    <div className="cards-all">
       <div className="cards-left">
         <div className="button-up">
           <Button className="home">
@@ -109,6 +133,7 @@ const Card = () => {
           )}
         </div>
       </div>
+
       <div className="cards-right">
         <div className="weather-up">
           <div className="forecast">
@@ -116,56 +141,20 @@ const Card = () => {
             <p>Forecast</p>
           </div>
         </div>
+
         <div className="weather-bottom">
-          <div className="first-three-day">
-            <div>
+          {forecastData.map((dayData, index) => (
+            <div key={index} className="days">
               <div className="icon">
-                <i className="wi wi-rain"></i>
+                <img src={dayData.day.condition.icon} alt="" />
               </div>
-              <p className="degrees">24°C</p>
-              <p className="date">Sun. 3 July</p>
+              <p className="degrees">{dayData.day.maxtemp_c}°C</p>
+              <p className="date">{dayData.date}</p>
             </div>
-            <div>
-              <div className="icon">
-                <i className="wi wi-rain-mix"></i>
-              </div>
-              <p className="degrees">32°C</p>
-              <p className="date">Mon. 4 July</p>
-            </div>
-            <div>
-              <div className="icon">
-                <i className="wi wi-strong-wind"></i>
-              </div>
-              <p className="degrees">28°C</p>
-              <p className="date">Sat. 5 July</p>
-            </div>
-          </div>
-          <div className="second-three-day">
-            <div>
-              <div className="icon">
-                <i className="wi wi-night-alt-cloudy"></i>
-              </div>
-              <p className="degrees">21°C</p>
-              <p className="date">Wed. 6 July</p>
-            </div>
-            <div>
-              <div className="icon">
-                <i className="wi wi-day-sunny"></i>
-              </div>
-              <p className="degrees">25°C</p>
-              <p className="date">Thu. 7 July</p>
-            </div>
-            <div>
-              <div className="icon">
-                <i className="wi wi-rain"></i>
-              </div>
-              <p className="degrees">18°C</p>
-              <p className="date">Fri. 8 July</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-    </Container>
+    </div>
   );
 };
 
